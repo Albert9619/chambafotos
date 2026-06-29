@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -20,47 +21,36 @@ body{
 }
 
 .galeria{
-
     column-count:5;
     column-gap:15px;
     padding:15px;
-
 }
 
 @media(max-width:1200px){
-
 .galeria{
 column-count:4;
 }
-
 }
 
 @media(max-width:900px){
-
 .galeria{
 column-count:3;
 }
-
 }
 
 @media(max-width:650px){
-
 .galeria{
 column-count:2;
 }
-
 }
 
 @media(max-width:450px){
-
 .galeria{
 column-count:1;
 }
-
 }
 
 .imagen{
-
     width:100%;
     margin-bottom:15px;
     cursor:pointer;
@@ -69,20 +59,35 @@ column-count:1;
     background:white;
     box-shadow:0 3px 10px rgba(0,0,0,.12);
     transition:.25s;
-
+    break-inside:avoid;
 }
 
 .imagen:hover{
-
 transform:scale(1.02);
-
 }
 
 .imagen img{
-
 width:100%;
 display:block;
+}
 
+.pdf{
+padding:35px 20px;
+text-align:center;
+}
+
+.pdf .icono{
+font-size:70px;
+margin-bottom:20px;
+}
+
+.pdf h2{
+font-size:24px;
+margin-bottom:10px;
+}
+
+.pdf p{
+color:#666;
 }
 
 #visor{
@@ -146,68 +151,95 @@ user-select:none;
 
 <script>
 
-const imagenes=[
+const elementos=[
 
-"001.jpeg",
-"002.jpeg",
-"003.jpeg",
-"004.jpeg",
-"005.jpeg",
-"006.jpeg",
-"007.jpeg",
-"008.jpeg",
-"009.jpeg",
-"010.jpeg",
-"011.jpeg",
-"012.jpeg",
-"013.jpeg",
-"014.jpeg",
-"015.jpeg",
-"016.jpeg",
-"017.jpeg",
-"018.jpeg",
-"019.jpeg",
-"020.jpeg",
-"021.jpeg",
-"022.jpeg",
-"023.jpeg",
-"024.jpeg",
-"025.jpeg",
-"026.jpeg",
-"027.jpeg",
-"028.jpeg",
-"029.jpeg",
-"030.jpeg",
-"030.jpeg"
+{tipo:"imagen",archivo:"001.jpeg"},
+{tipo:"imagen",archivo:"002.jpeg"},
+{tipo:"imagen",archivo:"003.jpeg"},
+{tipo:"imagen",archivo:"004.jpeg"},
+{tipo:"imagen",archivo:"005.jpeg"},
+{tipo:"imagen",archivo:"006.jpeg"},
+{tipo:"imagen",archivo:"007.jpeg"},
+{tipo:"imagen",archivo:"008.jpeg"},
+{tipo:"imagen",archivo:"009.jpeg"},
+{tipo:"imagen",archivo:"010.jpeg"},
+{tipo:"imagen",archivo:"011.jpeg"},
+{tipo:"imagen",archivo:"012.jpeg"},
+{tipo:"imagen",archivo:"013.jpeg"},
+{tipo:"imagen",archivo:"014.jpeg"},
+{tipo:"imagen",archivo:"015.jpeg"},
+{tipo:"imagen",archivo:"016.jpeg"},
+{tipo:"imagen",archivo:"017.jpeg"},
+{tipo:"imagen",archivo:"018.jpeg"},
+{tipo:"imagen",archivo:"019.jpeg"},
+{tipo:"imagen",archivo:"020.jpeg"},
+{tipo:"imagen",archivo:"021.jpeg"},
+{tipo:"imagen",archivo:"022.jpeg"},
+{tipo:"imagen",archivo:"023.jpeg"},
+{tipo:"imagen",archivo:"024.jpeg"},
+{tipo:"imagen",archivo:"025.jpeg"},
+{tipo:"imagen",archivo:"026.jpeg"},
+{tipo:"imagen",archivo:"027.jpeg"},
+{tipo:"imagen",archivo:"028.jpeg"},
+{tipo:"imagen",archivo:"029.jpeg"},
+{tipo:"imagen",archivo:"030.jpeg"},
 
+{
+tipo:"pdf",
+archivo:"Productos.pdf",
+titulo:"Productos"
+}
 
 ];
 
 const galeria=document.getElementById("galeria");
 
-imagenes.forEach(imagen=>{
+elementos.forEach(item=>{
 
-galeria.innerHTML+=`
-<div class="imagen">
-<img src="imagenes/${imagen}">
-</div>
+if(item.tipo==="imagen"){
+
+const div=document.createElement("div");
+div.className="imagen";
+
+div.innerHTML=`<img src="imagenes/${item.archivo}" alt="">`;
+
+div.onclick=()=>{
+
+document.getElementById("imagenGrande").src="imagenes/"+item.archivo;
+document.getElementById("visor").style.display="flex";
+
+}
+
+galeria.appendChild(div);
+
+}else{
+
+const div=document.createElement("div");
+div.className="imagen pdf";
+
+div.innerHTML=`
+
+<div class="icono">📕</div>
+
+<h2>${item.titulo}</h2>
+
+<p>Haz clic para abrir el catálogo</p>
+
 `;
 
-});
+div.onclick=()=>{
 
-const visor=document.getElementById("visor");
-const grande=document.getElementById("imagenGrande");
+window.open("pdf/"+item.archivo,"_blank");
 
-document.querySelectorAll(".imagen img").forEach(img=>{
+}
 
-img.onclick=()=>{
-
-grande.src=img.src;
-visor.style.display="flex";
+galeria.appendChild(div);
 
 }
 
 });
+
+const visor=document.getElementById("visor");
 
 document.getElementById("cerrar").onclick=()=>{
 
