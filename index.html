@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Galería</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#f5f5f5;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.galeria{
+
+    column-count:5;
+    column-gap:15px;
+    padding:15px;
+
+}
+
+@media(max-width:1200px){
+
+.galeria{
+column-count:4;
+}
+
+}
+
+@media(max-width:900px){
+
+.galeria{
+column-count:3;
+}
+
+}
+
+@media(max-width:650px){
+
+.galeria{
+column-count:2;
+}
+
+}
+
+@media(max-width:450px){
+
+.galeria{
+column-count:1;
+}
+
+}
+
+.imagen{
+
+    width:100%;
+    margin-bottom:15px;
+    cursor:pointer;
+    border-radius:12px;
+    overflow:hidden;
+    background:white;
+    box-shadow:0 3px 10px rgba(0,0,0,.12);
+    transition:.25s;
+
+}
+
+.imagen:hover{
+
+transform:scale(1.02);
+
+}
+
+.imagen img{
+
+width:100%;
+display:block;
+
+}
+
+#visor{
+
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.9);
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+z-index:999;
+
+}
+
+#visor img{
+
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+
+}
+
+#cerrar{
+
+position:absolute;
+
+top:25px;
+right:35px;
+
+font-size:45px;
+
+color:white;
+
+cursor:pointer;
+
+user-select:none;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="galeria" id="galeria"></div>
+
+<div id="visor">
+
+<div id="cerrar">&times;</div>
+
+<img id="imagenGrande">
+
+</div>
+
+<script>
+
+const imagenes=[
+
+"001.jpeg",
+"002.jpeg",
+"003.jpeg",
+"004.jpeg",
+"005.jpeg",
+"006.jpeg",
+"007.jpeg",
+"008.jpeg",
+"009.jpeg",
+"010.jpeg",
+"011.jpeg",
+"012.jpeg",
+"013.jpeg",
+"014.jpeg",
+"015.jpeg",
+"016.jpeg",
+"017.jpeg",
+"018.jpeg",
+"019.jpeg",
+"020.jpeg",
+"021.jpeg",
+"022.jpeg",
+"023.jpeg",
+"024.jpeg",
+"025.jpeg",
+"026.jpeg",
+"027.jpeg",
+"028.jpeg",
+"029.jpeg",
+"030.jpeg",
+"030.jpeg"
+
+
+];
+
+const galeria=document.getElementById("galeria");
+
+imagenes.forEach(imagen=>{
+
+galeria.innerHTML+=`
+<div class="imagen">
+<img src="imagenes/${imagen}">
+</div>
+`;
+
+});
+
+const visor=document.getElementById("visor");
+const grande=document.getElementById("imagenGrande");
+
+document.querySelectorAll(".imagen img").forEach(img=>{
+
+img.onclick=()=>{
+
+grande.src=img.src;
+visor.style.display="flex";
+
+}
+
+});
+
+document.getElementById("cerrar").onclick=()=>{
+
+visor.style.display="none";
+
+}
+
+visor.onclick=(e)=>{
+
+if(e.target===visor){
+
+visor.style.display="none";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
